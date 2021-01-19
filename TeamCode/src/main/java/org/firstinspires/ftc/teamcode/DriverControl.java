@@ -25,6 +25,10 @@ public class DriverControl extends LinearOpMode {
     private DcMotor rearLeft;       //2     Hub1 P2
     private DcMotor frontRight;     //3     Hub1 P1
     private DcMotor rearRight;      //4     Hub1 P3
+    private DcMotor shooter;
+    private CRServo shooterServo;
+    private CRServo claw;
+    private CRServo clawLift;
     //private DcMotor clawMotor;
 
     //private DcMotor intake1;
@@ -53,6 +57,12 @@ public class DriverControl extends LinearOpMode {
         rearLeft = hardwareMap.dcMotor.get("rearLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
         rearRight = hardwareMap.dcMotor.get("rearRight");
+
+        shooter = hardwareMap.dcMotor.get("shooter");
+        shooterServo = hardwareMap.crservo.get("shooterServo");
+
+        claw = hardwareMap.crservo.get("claw");
+        clawLift = hardwareMap.crservo.get("clawLift");
         //clawMotor = hardwareMap.dcMotor.get("clawMotor");
 
         //intake1 = hardwareMap.dcMotor.get("intake1");
@@ -72,6 +82,7 @@ public class DriverControl extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        shooter.setDirection(DcMotorSimple.Direction.FORWARD);
         //lawServo.setDirection(DcMotor.Direction.FORWARD);
 
         //intake1.setDirection(DcMotor.Direction.REVERSE);
@@ -129,14 +140,25 @@ public class DriverControl extends LinearOpMode {
                     //blinkinLedDriver.setPattern(pattern);
                 }
                 //Intake On/Off
-                if (gamepad1.b){
+                while (gamepad2.left_bumper){
+                    shooter.setPower(1);
                     //intake1.setPower(0);
                     //intake2.setPower(0);
                 }
 
-                if (gamepad1.y) {
-                    //intake1.setPower(1*intakeOffset);
-                    //intake2.setPower(1*intakeOffset);
+                while (gamepad2.right_bumper) {
+                    shooterServo.setPower(1);
+                }
+                
+
+
+
+                claw.setPower(gamepad2.right_stick_x);
+                while (gamepad2.x) {
+                    clawLift.setPower(-1);
+                }
+                while (gamepad2.y) {
+                    clawLift.setPower(1);
                 }
                 //Declare Values to Mecanum Variables
                 drive = gamepad1.right_stick_y * direction;
