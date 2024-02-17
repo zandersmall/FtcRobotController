@@ -202,8 +202,8 @@ public class ConceptI2cAddressChange extends LinearOpMode {
   }
 
   private void performAction(String actionName, int port, I2cAddr i2cAddress, int memAddress, int memLength) {
-    if (actionName.equalsIgnoreCase("read")) dim.enableI2cReadMode(port, i2cAddress, memAddress, memLength);
-    if (actionName.equalsIgnoreCase("write")) dim.enableI2cWriteMode(port, i2cAddress, memAddress, memLength);
+    if ("read".equalsIgnoreCase(actionName)) dim.enableI2cReadMode(port, i2cAddress, memAddress, memLength);
+    if ("write".equalsIgnoreCase(actionName)) dim.enableI2cWriteMode(port, i2cAddress, memAddress, memLength);
 
     dim.setI2cPortActionFlag(port);
     dim.writeI2cCacheToController(port);
